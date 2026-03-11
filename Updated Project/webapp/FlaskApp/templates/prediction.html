@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-diagnoses me-2"></i>Breast Cancer Prediction</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-info-circle me-2"></i>Instructions:</h6>
+                    <p class="mb-0">Please enter the patient's tumor characteristics below. The system will analyze the
+                        features and provide a prediction along with confidence level and treatment suggestions.</p>
+                </div>
+
+                <form method="POST" id="predictionForm">
+                    <div class="row">
+                        {% for feature in features %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ feature }}" class="form-label">
+                                <strong>{{ feature.replace('_', ' ').title() }}</strong>
+                                {% if feature in descriptions %}
+                                <small class="text-muted d-block">{{ descriptions[feature] }}</small>
+                                {% endif %}
+                            </label>
+                            <input type="number" step="any" class="form-control feature-input" id="{{ feature }}"
+                                name="{{ feature }}" required placeholder="Enter {{ feature.replace('_', ' ') }}">
+                            <div class="form-text">Enter numerical value</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-calculator me-2"></i>Analyze & Predict
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Sample Values Section -->
+                <div class="mt-4">
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <h6 class="mb-0"><i class="fas fa-vial me-2"></i>Sample Values for Testing</h6>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2">Use these sample values to test the system:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>Typical Benign Case:</strong>
+                                    <ul class="small">
+                                        <li>radius_mean: 12.0</li>
+                                        <li>texture_mean: 18.0</li>
+                                        <li>perimeter_mean: 80.0</li>
+                                        <li>area_mean: 500.0</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Typical Malignant Case:</strong>
+                                    <ul class="small">
+                                        <li>radius_mean: 17.0</li>
+                                        <li>texture_mean: 20.0</li>
+                                        <li>perimeter_mean: 110.0</li>
+                                        <li>area_mean: 1000.0</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function loadBenignSample() {
+        const benign = {
+            radius_mean: 12,
+            texture_mean: 18,
+            perimeter_mean: 80,
+            area_mean: 500,
+            radius_worst: 15,
+            perimeter_worst: 95,
+            area_worst: 600,
+            concave_points_mean: 0.04,
+            concave_points_worst: 0.05,
+            area_se: 30
+        };
+
+        for (const key in benign) {
+            const el = document.getElementById(key);
+            if (el) el.value = benign[key];
+        }
+    }
+
+    function loadMalignantSample() {
+        const malignant = {
+            radius_mean: 17,
+            texture_mean: 20,
+            perimeter_mean: 110,
+            area_mean: 1000,
+            radius_worst: 22,
+            perimeter_worst: 150,
+            area_worst: 1200,
+            concave_points_mean: 0.18,
+            concave_points_worst: 0.25,
+            area_se: 80
+        };
+
+        for (const key in malignant) {
+            const el = document.getElementById(key);
+            if (el) el.value = malignant[key];
+        }
+    }
+</script>
+
+{% endblock %}

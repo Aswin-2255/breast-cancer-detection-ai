@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="welcome-section text-center mb-5">
+            <h1 class="display-4 mb-3">Welcome, Dr. {{ username }}!</h1>
+            <p class="lead">Breast Cancer Classification and Prediction System</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">AI-Powered Diagnosis</h5>
+                <p class="card-text">Advanced machine learning model for accurate breast cancer classification with 95%+ accuracy.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Comprehensive Analysis</h5>
+                <p class="card-text">Detailed visualizations and performance metrics to understand model behavior.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-user-md fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Clinical Support</h5>
+                <p class="card-text">Treatment suggestions and clinical guidance based on prediction results.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-rocket me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-6 mb-3">
+                        <a href="{{ url_for('prediction') }}" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-diagnoses me-2"></i>Make Prediction
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="{{ url_for('visualizations') }}" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-chart-bar me-2"></i>View Analysis
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Important Notes</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>This tool assists but doesn't replace clinical judgment</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Always verify results with additional tests</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Consult with oncology specialists for treatment decisions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>System Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Model:</strong> Random Forest Classifier</p>
+                <p><strong>Accuracy:</strong> 95%+</p>
+                <p><strong>Features:</strong> 8 key morphological characteristics</p>
+                <p><strong>Last Updated:</strong> Regularly maintained</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

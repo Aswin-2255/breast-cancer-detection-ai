@@ -1,0 +1,13 @@
+{
+    "selected_features": [
+        "area_worst",
+        "concave points_worst",
+        "perimeter_worst",
+        "concave points_mean",
+        "radius_worst",
+        "perimeter_mean",
+        "area_se",
+        "radius_mean"
+    ],
+    "feature_count": 8
+}

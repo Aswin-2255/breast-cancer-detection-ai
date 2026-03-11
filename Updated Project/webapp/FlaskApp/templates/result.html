@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header 
+                {% if result.diagnosis == 'Malignant' %}bg-danger
+                {% else %}bg-success{% endif %} text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-{% if result.diagnosis == 'Malignant' %}exclamation-triangle{% else %}check-circle{% endif %} me-2"></i>
+                    Prediction Result: {{ result.diagnosis }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <!-- Diagnosis Summary -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h3 class="{% if result.diagnosis == 'Malignant' %}text-danger{% else %}text-success{% endif %}">
+                                    {{ result.diagnosis }}
+                                </h3>
+                                <div class="display-4 {% if result.diagnosis == 'Malignant' %}text-danger{% else %}text-success{% endif %}">
+                                    {{ result.confidence }}%
+                                </div>
+                                <p class="text-muted">Confidence Level</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>Probability Breakdown:</h5>
+                                <div class="progress mb-2" style="height: 25px;">
+                                    <div class="progress-bar bg-success" style="width: {{ result.probability_benign }}%">
+                                        Benign: {{ result.probability_benign }}%
+                                    </div>
+                                </div>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar bg-danger" style="width: {{ result.probability_malignant }}%">
+                                        Malignant: {{ result.probability_malignant }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Features -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-list me-2"></i>Input Features</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for feature, value in result.feature_values.items() %}
+                            <div class="col-md-3 mb-2">
+                                <strong>{{ feature.replace('_', ' ').title() }}:</strong> {{ value }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treatment Suggestions -->
+                <div class="card">
+                    <div class="card-header 
+                        {% if result.diagnosis == 'Malignant' %}bg-warning text-dark
+                        {% else %}bg-success text-white{% endif %}">
+                        <h5 class="mb-0">
+                            <i class="fas fa-hand-holding-medical me-2"></i>
+                            Clinical Recommendations
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for suggestion in result.suggestions %}
+                            <div class="col-md-6 mb-2">
+                                <i class="fas fa-arrow-right text-primary me-2"></i>
+                                {{ suggestion }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {% if result.diagnosis == 'Malignant' %}
+                        <div class="alert alert-danger mt-3">
+                            <strong><i class="fas fa-exclamation-triangle me-2"></i>Important:</strong>
+                            This prediction suggests malignant tumor. Please consult immediately with an oncology specialist and conduct further diagnostic tests for confirmation.
+                        </div>
+                        {% else %}
+                        <div class="alert alert-success mt-3">
+                            <strong><i class="fas fa-check-circle me-2"></i>Note:</strong>
+                            While this prediction suggests benign characteristics, regular monitoring and follow-up are still recommended as per standard medical guidelines.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-4 text-center">
+                    <a href="{{ url_for('prediction') }}" class="btn btn-primary me-2">
+                        <i class="fas fa-redo me-2"></i>New Prediction
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                        <i class="fas fa-home me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
